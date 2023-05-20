@@ -1,0 +1,38 @@
+#!/bin/bash
+
+#sudo docker container ls
+
+sudo docker container stop mypg
+
+sudo docker container rm mypg
+
+echo aaa
+
+sudo docker image build . -t custom-postgres:14.2-alpine3.15
+
+#sudo docker container run \
+#	--name mypg \
+#  -p 5432:5432 \
+#  -d custom-postgres:14.2-alpine3.15  
+
+#sudo docker container exec mypg \
+#	psql -U postgres -f schema.sql
+  
+sudo docker container run -d -p 1025:1025 \
+    --name mypg \
+    -v $PWD/index.html:/usr/share/caddy/index.html \
+    -v caddy_data:/data \
+    -d custom-postgres:14.2-alpine3.15  
+
+#sudo docker exec -it test ps aux
+
+sudo docker exec -it mypg ls
+
+sudo docker exec -it mypg mkdir /usr/src/pages
+
+sudo docker exec -it mypg cp site.html /usr/src/pages
+
+#obs : schema.sql e index.html foram arquivos que usei para entender como o #docker funciona
+
+
+
